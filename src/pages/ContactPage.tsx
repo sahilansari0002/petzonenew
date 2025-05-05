@@ -266,8 +266,8 @@ const ContactPage = () => {
           </motion.div>
         </div>
 
-               {/* Map Placeholder */}
-               <div className="mt-12 bg-white rounded-xl overflow-hidden shadow-card">
+                      {/* Map Placeholder */}
+                      <div className="mt-12 bg-white rounded-xl overflow-hidden shadow-card">
   <div className="p-6 border-b">
     <h2 className="text-2xl font-semibold text-gray-900">Find Us</h2>
   </div>

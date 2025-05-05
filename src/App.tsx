@@ -15,6 +15,15 @@ import AuthPage from './pages/AuthPage';
 import NotFoundPage from './pages/NotFoundPage';
 import UserDashboard from './pages/UserDashboard';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import ApplicationDetails from './pages/ApplicationDetails';
+
+// Admin Pages
+import AdminLayout from './pages/admin/AdminLayout';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminAdoptions from './pages/admin/AdminAdoptions';
+import AdminPets from './pages/admin/AdminPets';
+import AdminProducts from './pages/admin/AdminProducts';
+import AdminShelters from './pages/admin/AdminShelters';
 
 function App() {
   return (
@@ -32,6 +41,7 @@ function App() {
           <Route path="blog" element={<BlogPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="auth" element={<AuthPage />} />
+          <Route path="applications/:id" element={<ApplicationDetails />} />
           <Route 
             path="dashboard" 
             element={
@@ -41,6 +51,22 @@ function App() {
             } 
           />
           <Route path="*" element={<NotFoundPage />} />
+        </Route>
+
+        {/* Admin Routes */}
+        <Route 
+          path="/admin" 
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="adoptions" element={<AdminAdoptions />} />
+          <Route path="pets" element={<AdminPets />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="shelters" element={<AdminShelters />} />
         </Route>
       </Routes>
     </AnimatePresence>
