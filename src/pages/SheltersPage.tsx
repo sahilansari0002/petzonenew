@@ -94,15 +94,23 @@ const SheltersPage = () => {
           ))}
         </div>
 
-        {/* Map Placeholder */}
-        <div className="mt-12 bg-gray-100 rounded-xl overflow-hidden shadow-card">
-          <div className="p-6 bg-white border-b">
-            <h2 className="text-2xl font-semibold text-gray-900">Find Shelters Near You</h2>
-          </div>
-          <div className="h-96 bg-gray-200 flex items-center justify-center">
-            <p className="text-gray-600">Interactive map would be displayed here</p>
-          </div>
-        </div>
+        <div className="mt-12 bg-white rounded-xl overflow-hidden shadow-card">
+  <div className="p-6 border-b">
+    <h2 className="text-2xl font-semibold text-gray-900">Find Us</h2>
+  </div>
+  <div className="h-96 w-full">
+    <iframe
+      title="Shop Location"
+      src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3731.8091046196046!2d77.0154676!3d20.717975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjDCsDQzJzA0LjciTiA3N8KwMDAnNTUuNyJF!5e0!3m2!1sen!2sin!4v1745236823566!5m2!1sen!2sin"
+      width="100%"
+      height="100%"
+      style={{ border: 0 }}
+      allowFullScreen=""
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+</div>
         
         {/* Volunteer Call to Action */}
         <div className="mt-12 bg-primary-700 rounded-xl p-8 text-white">
@@ -115,7 +123,7 @@ const SheltersPage = () => {
               </p>
             </div>
             <Link
-              to="/volunteer"
+              to="#"
               className="bg-white text-primary-700 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium inline-block transition-colors"
             >
               Become a Volunteer
