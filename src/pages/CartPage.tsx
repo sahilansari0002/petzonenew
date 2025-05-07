@@ -3,10 +3,56 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+import { useState } from 'react';
 
 const CartPage = () => {
-  const { items, removeItem, updateQuantity, total, loading } = useCart();
+  const { items, removeItem, updateQuantity, total, loading, clearCart } = useCart();
   const { user } = useAuth();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleCheckout = async () => {
+    if (!user?.id || items.length === 0) {
+      setError('Unable to process checkout. Please ensure you are logged in.');
+      return;
+    }
+
+    setIsProcessing(true);
+    setError(null);
+
+    try {
+      const cartItemsWithUserId = items.map(item => ({
+        ...item,
+        user_id: user.id
+      }));
+
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-order-email`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          cartItems: cartItemsWithUserId,
+          userEmail: user.email,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to process order');
+      }
+
+      await clearCart();
+      alert('Order processed successfully! Check your email for confirmation.');
+    } catch (error: any) {
+      console.error('Error processing order:', error);
+      setError(error.message || 'Failed to process order. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -25,7 +71,7 @@ const CartPage = () => {
           <p className="text-gray-600 mb-6">Sign in to view and manage your cart</p>
           <Link
             to="/auth"
-            className="inline-flex items-center bg-primary-600  text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors"
+            className="inline-flex items-center bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors"
           >
             Sign In
             <ArrowRight className="ml-2 h-5 w-5" />
@@ -125,6 +171,13 @@ const CartPage = () => {
                 <span className="text-lg font-medium text-gray-900">Total</span>
                 <span className="text-2xl font-bold text-gray-900">₹{total.toFixed(2)}</span>
               </div>
+
+              {error && (
+                <div className="mb-6 p-4 bg-error-100 text-error-800 rounded-lg">
+                  {error}
+                </div>
+              )}
+
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   to="/products"
@@ -133,9 +186,20 @@ const CartPage = () => {
                   Continue Shopping
                 </Link>
                 <button
-                  className="flex-1 px-6 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors"
+                  onClick={handleCheckout}
+                  disabled={isProcessing}
+                  className={`flex-1 px-6 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors flex items-center justify-center ${
+                    isProcessing ? 'opacity-70 cursor-not-allowed' : ''
+                  }`}
                 >
-                  Proceed to Checkout
+                  {isProcessing ? (
+                    <>
+                      <div className="w-5 h-5 border-t-2 border-white border-solid rounded-full animate-spin mr-2"></div>
+                      Processing...
+                    </>
+                  ) : (
+                    'Proceed to Checkout'
+                  )}
                 </button>
               </div>
             </div>

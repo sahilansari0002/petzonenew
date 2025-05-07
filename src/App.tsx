@@ -7,6 +7,8 @@ import PetDetailsPage from './pages/PetDetailsPage';
 import AdoptionPage from './pages/AdoptionPage';
 import ProductsPage from './pages/ProductsPage';
 import CartPage from './pages/CartPage';
+import WishlistPage from './pages/WishlistPage';
+import FavoritesPage from './pages/FavoritesPage';
 import DonationPage from './pages/DonationPage';
 import SheltersPage from './pages/SheltersPage';
 import BlogPage from './pages/BlogPage';
@@ -36,6 +38,8 @@ function App() {
           <Route path="adopt/:id" element={<AdoptionPage />} />
           <Route path="products" element={<ProductsPage />} />
           <Route path="cart" element={<CartPage />} />
+          <Route path="wishlist" element={<WishlistPage />} />
+          <Route path="favorites" element={<FavoritesPage />} />
           <Route path="donate" element={<DonationPage />} />
           <Route path="shelters" element={<SheltersPage />} />
           <Route path="blog" element={<BlogPage />} />

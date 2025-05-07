@@ -210,8 +210,8 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-800 mb-1">Email</h3>
-                    <p className="text-gray-600">contact@petzone.com</p>
-                    <p className="text-gray-600">support@petzone.com</p>
+                    <p className="text-gray-600">ashvinidharmale25@gmail.com</p>
+                    <p className="text-gray-600">jagdalesrushti20@gmail.com</p>
                   </div>
                 </div>
                 
@@ -266,8 +266,8 @@ const ContactPage = () => {
           </motion.div>
         </div>
 
-                      {/* Map Placeholder */}
-                      <div className="mt-12 bg-white rounded-xl overflow-hidden shadow-card">
+               {/* Map Placeholder */}
+               <div className="mt-12 bg-white rounded-xl overflow-hidden shadow-card">
   <div className="p-6 border-b">
     <h2 className="text-2xl font-semibold text-gray-900">Find Us</h2>
   </div>
@@ -284,7 +284,6 @@ const ContactPage = () => {
     ></iframe>
   </div>
 </div>
-
       </div>
     </div>
   );
